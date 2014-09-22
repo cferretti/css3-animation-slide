@@ -1,0 +1,64 @@
+@-webkit-keyframes rotate {
+    0% {
+        opacity : 1;
+    	-webkit-transform-origin : 0% 100%;
+    }
+    100% {
+    	-webkit-transform-origin : 0% 100%;
+        -webkit-transform:translate(0px, 0px) rotate(75deg);
+         opacity : 0;
+    }
+}
+
+@-webkit-keyframes onche {
+    0% {
+    	background-color : red;
+    	-webkit-transform-origin : 50% 50%;
+    	-webkit-transform:translate(0px, 0px);
+    }
+    100% {
+    	background-color : blue;
+    	-webkit-transform-origin : 50% 50%;
+    	-webkit-transform:translate(250px, 0px);
+    }
+}
+
+.circle {
+    -webkit-animation-duration: 4s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-name:"rotate";
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-play-state: paused;
+    -webkit-animation-delay: 0s ;
+}
+
+#circle{
+	height: 50px;
+    width: 150px;
+    background-color: teal;
+    display:inline-block;
+    margin : 0px;
+    padding : 0px;
+    margin-left: -7px;
+}
+
+.circle-begin{
+	height: 50px;
+    width: 50px;
+    background-color: teal;
+    display:inline-block;
+    margin : 0px;
+    padding : 0px;
+}
+
+.onche{
+	height : 50px;
+	width : 50px;
+	border-radius: 50%;
+	 -webkit-animation-duration: 5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-name:"onche";
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-play-state: paused;
+    -webkit-animation-delay: 0s ;
+}

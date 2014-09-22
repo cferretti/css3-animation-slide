@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	
+	<link rel="stylesheet" href="./css/style.css">
+	<script src="./bower_components/angular/angular.min.js"></script>
+	<script src="./js/slide.js"></script>
+	<script>
+		var app = angular.module("slide",["directive.slideIt"]);
+	</script>
+</head>
+<body ng-app="slide">
+		<div  class="circle-begin" >
+			<p>Text</p>
+		</div>
+		<div  id="circle" class="circle" slide-it slide-delay="cssDelay">
+			<p>Text</p>
+		</div>
+		<br>
+		<div  class="circle-begin" >
+			<p>Text</p>
+		</div>
+		<div  id="circle" class="circle" slide-it slide-delay="cssDelay2">
+			<p>Text</p>
+		</div>
+		<br>
+		<div  class="circle-begin">
+			<p>Text</p>
+		</div>
+		<div  id="circle" class="circle" slide-it slide-delay="cssDelay3">
+			<p>Text</p>
+		</div>
+
+		<div  class="circle" slide-it slide-delay="cssDelay2">
+			<p>Text</p>
+		</div>
+
+		<div  class="onche" slide-it>
+		</div>
+
+</body>
+</html>
