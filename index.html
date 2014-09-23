@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html  ng-app="slide">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -13,8 +13,21 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <script src="bower_components/angular/angular.min.js"></script>
+	<script src="javascripts/slide.js"></script>
+	<script>
+		var app = angular.module("slide",["directive.slideIt"]);
+		app.controller('MainCtrl', ['$scope', function ($scope) {
+			$scope.rangeA = 500;
+			$scope.rangeB = 300;
+			$scope.rangeC = 200;
+			$scope.rangeD = 100;
+			$scope.rangeE = 1000;
+		}])
+	</script>
   </head>
-  <body>
+  <body ng-controller="MainCtrl">
     <div class="wrapper">
       <header>
         <h1>Css3-animation-slide</h1>
@@ -28,9 +41,11 @@
       </header>
       <section>
         <h1>
-<a name="css3-animation-slider" class="anchor" href="#css3-animation-slider"><span class="octicon octicon-link"></span></a>CSS3 Animation Slider</h1>
+			<a name="css3-animation-slider" class="anchor" href="#css3-animation-slider"><span class="octicon octicon-link"></span></a>CSS3 Animation Slider
+		</h1>
+		<p>AngularJS directive allow you to control an animation by slide the element</p>
 
-<p>AngularJS directive allow you to control an animation by slide the element</p>
+		<div class="circle translate" slide-it slide-it-range="rangeA"></div>
       </section>
     </div>
     <footer>
