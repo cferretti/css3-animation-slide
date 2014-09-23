@@ -1,6 +1,6 @@
 var slide = angular.module('directive.slideIt', []);
-slide.controller('SlideItService', ['$scope',function ($scope) {
-	this.pos = {
+slide.controller('SlideItCtrl', ['$scope',function ($scope) {
+	$scope.pos = {
 		init : {
 			x : 0,
 			y : 0
@@ -10,32 +10,32 @@ slide.controller('SlideItService', ['$scope',function ($scope) {
 			y : 0
 		}
 	};
-	this.enabled = false;
-	this.dragRange = 0;
-	this.animationDuration = 0;
-	this.init = function(elements, dragRange){
-		this.animationDuration = this.getAnimationDuration(elements[0]);
-		this.dragRange = dragRange;
+	$scope.enabled = false;
+	$scope.dragRange = 0;
+	$scope.animationDuration = 0;
+	$scope.init = function(elements, dragRange){
+		$scope.animationDuration = $scope.getAnimationDuration(elements[0]);
+		$scope.dragRange = dragRange;
 	};
-	this.getAnimationDuration = function(element){
+	$scope.getAnimationDuration = function(element){
 		var cssDuration = getComputedStyle(element, null).animationDuration ||  getComputedStyle(element, null).WebkitAnimationDuration;
 		var duration = parseFloat(cssDuration.replace('s',''));
 		return duration;
 	};
-	this.getDelayDragged = function(element, event){
+	$scope.getDelayDragged = function(element, event){
 
 		var delay = 0;
 
-		if(this.enabled){
-			if(this.pos.init.x == 0){
-				this.pos.init.x = event.x;
+		if($scope.enabled){
+			if($scope.pos.init.x == 0){
+				$scope.pos.init.x = event.x;
 			}
 
-			this.pos.current.x = event.x;
+			$scope.pos.current.x = event.x;
 
-			var delay =  this.animationDuration * ((this.pos.current.x - this.pos.init.x)/this.dragRange);
-			if(delay >= this.animationDuration){
-				delay = this.animationDuration-0.001; //Avoid go initial position
+			var delay =  $scope.animationDuration * (($scope.pos.current.x - $scope.pos.init.x)/$scope.dragRange);
+			if(delay >= $scope.animationDuration){
+				delay = $scope.animationDuration-0.001; //Avoid go initial position
 			}else if(delay < 0){
 				delay = 0;
 			}
@@ -45,46 +45,43 @@ slide.controller('SlideItService', ['$scope',function ($scope) {
 
 		return delay;
 	};
-	this.setToDelay = function(elements, delay){
+	$scope.setToDelay = function(elements, delay){
 		var initialDisplay = elements[0].style.display;
 		elements[0].style.display='none';
 		elements.css({
 			"-webkit-animation-delay": delay + 's'
 		});
-		elements[0].offsetHeight; // no need to store this anywhere, the reference is enough
+		elements[0].offsetHeight; // no need to store $scope anywhere, the reference is enough
 		elements[0].style.display=initialDisplay;
 	};
-	this.drag = function(elements, event){
-		var delay = this.getDelayDragged(elements[0], event);
-		this.setToDelay(elements,delay);
+	$scope.drag = function(elements, event){
+		var delay = $scope.getDelayDragged(elements[0], event);
+		$scope.setToDelay(elements,delay);
 	};
-
-	return this;
-	
 }]);
 
 slide.directive('slideIt', ['$timeout', '$window', function ($timeout, $window) {
 	return {
 		restrict: 'A',
 		scope : {
-			dragRange : '=slideItRange'
+			range : '=slideItRange'
 		},
-		controller: 'SlideItService',
-		link : function (scope, iElement, iAttrs, SlideItService) {
+		controller: 'SlideItCtrl',
+		link : function (scope, iElement, iAttrs) {
 			iElement[0].draggable = 'true';
-			SlideItService.init(iElement, scope.dragRange);
+			scope.init(iElement, scope.range);
 			iElement[0].onmousedown = function(e){
-				SlideItService.enabled = true;
-				SlideItService.drag(iElement, e);
+				scope.enabled = true;
+				scope.drag(iElement, e);
 			};
 			angular.element(window).on('mousemove', function(e){
-               	if(SlideItService.enabled){
-					SlideItService.drag(iElement, e);
+               	if(scope.enabled){
+					scope.drag(iElement, e);
 				}
              });
 			angular.element(window).on('mouseup', function(e){
-               	SlideItService.enabled = false;
-				SlideItService.drag(iElement, e);
+               	scope.enabled = false;
+				scope.drag(iElement, e);
              });
 			iElement[0].ondragstart = function(e){
 				return false;
