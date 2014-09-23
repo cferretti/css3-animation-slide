@@ -377,6 +377,13 @@ footer p + p {
     border-radius: 100%;
 }
 
+.circle p {
+  line-height: 50px;
+  text-align: center;
+  color : #FFF;
+  font-size: 14px;
+}
+
 .translate{
     -webkit-animation-duration: 5s;
     -webkit-animation-timing-function: linear;

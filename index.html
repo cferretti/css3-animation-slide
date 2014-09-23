@@ -19,11 +19,23 @@
 	<script>
 		var app = angular.module("slide",["directive.slideIt"]);
 		app.controller('MainCtrl', ['$scope', function ($scope) {
-			$scope.rangeA = 500;
-			$scope.rangeB = 300;
-			$scope.rangeC = 200;
-			$scope.rangeD = 100;
-			$scope.rangeE = 1000;
+			$scope.examples = [
+				{
+					range : 500,
+				},
+				{
+					range : 300,
+				},
+				{
+					range : 200,
+				},
+				{
+					range : 100,
+				},
+				{
+					range : 1000,
+				}
+			];
 		}])
 	</script>
   </head>
@@ -44,8 +56,27 @@
 			<a name="css3-animation-slider" class="anchor" href="#css3-animation-slider"><span class="octicon octicon-link"></span></a>CSS3 Animation Slider
 		</h1>
 		<p>AngularJS directive allow you to control an animation by slide the element</p>
-
-		<div class="circle translate" slide-it slide-it-range="rangeA"></div>
+		<h1>Examples</h1>
+		<p>For the follow animation</p>
+		 <pre style='font-family:Consolas;'>
+			@-webkit-keyframes translate {
+			    0% {
+			      -webkit-transform-origin : 50% 50%;
+			      -webkit-transform:translate(0px, 0px);
+			    }
+			    100% {
+			      background-color : red;
+			      -webkit-transform-origin : 50% 50%;
+			      -webkit-transform:translate(250px, 0px);
+			    }
+			}
+		</pre>	
+		<div ng-repeat="example in examples">
+			<p>Range {{example.range}} : </p>
+			<div class="circle translate" slide-it slide-it-range="example.range">
+				<p>{{example.range}}</p>
+			</div>
+		</div>
       </section>
     </div>
     <footer>
