@@ -56,8 +56,9 @@
 			<a name="css3-animation-slider" class="anchor" href="#css3-animation-slider"><span class="octicon octicon-link"></span></a>CSS3 Animation Slider
 		</h1>
 		<p>AngularJS directive allow you to control an animation by slide the element</p>
+		<p>Simply add <code>slide-it</code> and <code>slide-it-range="XXX"</code> to your DOM elements you want to slide</p>
 		<h1>Examples</h1>
-		<p>For the follow animation</p>
+		<p>For the following animation</p>
 		 <pre style='font-family:Consolas;'>
 			@-webkit-keyframes translate {
 			    0% {
@@ -72,10 +73,15 @@
 			}
 		</pre>	
 		<div ng-repeat="example in examples">
-			<p>Range {{example.range}} : </p>
+			<p><code>
+				&lt;div class=&quot;circle translate&quot; slide-it slide-it-range=&quot;{{example.range}}&quot;&gt;
+					&lt;p&gt;{{example.range}}&lt;/p&gt;
+				&lt;/div&gt;
+			</code>
 			<div class="circle translate" slide-it slide-it-range="example.range">
 				<p>{{example.range}}</p>
 			</div>
+			<br>
 		</div>
       </section>
     </div>
