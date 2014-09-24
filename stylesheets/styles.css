@@ -370,6 +370,19 @@ footer p + p {
     }
 }
 
+
+@-webkit-keyframes rotate {
+    0% {
+      -webkit-transform-origin : 50% 50%;
+      -webkit-transform:translate(0px,0px) rotate(0deg);
+    }
+    100% {
+      background-color : red;
+      -webkit-transform-origin : 50% 50%;
+      -webkit-transform:translate(350px,0px) rotate(360deg);
+    }
+}
+
 .circle{
     background-color: blue;
     height : 50px;
@@ -377,7 +390,13 @@ footer p + p {
     border-radius: 100%;
 }
 
-.circle p {
+.rectangle{
+    background-color: blue;
+    height : 50px;
+    width : 50px;
+}
+
+.circle p, .rectangle p {
   line-height: 50px;
   text-align: center;
   color : #FFF;
@@ -388,6 +407,15 @@ footer p + p {
     -webkit-animation-duration: 5s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-name:"translate";
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-play-state: paused;
+    -webkit-animation-delay: 0s ;
+}
+
+.rotate{
+    -webkit-animation-duration: 10s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-name:"rotate";
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-play-state: paused;
     -webkit-animation-delay: 0s ;

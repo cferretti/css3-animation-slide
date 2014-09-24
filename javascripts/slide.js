@@ -20,7 +20,6 @@ slide.controller('SlideItCtrl', ['$scope',function ($scope) {
 		}else{
 			// Its compute time !
 			$scope.dragRange = elements.parent()[0].offsetWidth * (parseInt(dragRange.replace('%','')) / 100);
-			console.log($scope.dragRange);
 		}
 	};
 	$scope.getAnimationDuration = function(element){
@@ -74,34 +73,37 @@ slide.directive('slideIt', ['$timeout', '$window', '$swipe',function ($timeout, 
 		},
 		controller: 'SlideItCtrl',
 		link : function (scope, iElement, iAttrs) {
-			iElement[0].draggable = 'true';
-			scope.init(iElement, scope.range);
-			$swipe.bind(iElement, {
-				start : function(event){
-					scope.enabled = true;
-					scope.drag(iElement, event);
-				}
-			});
+			scope.$watch('iAttrs.class',function(){
 
-			$swipe.bind(angular.element(window), {
-				move : function(event){
-					if(scope.enabled){
+				iElement[0].draggable = 'true';
+				scope.init(iElement, scope.range);
+				$swipe.bind(iElement, {
+					start : function(event){
+						scope.enabled = true;
 						scope.drag(iElement, event);
 					}
-				},
-				end : function(event){
-					scope.enabled = false;
-					scope.drag(iElement, event);
-				},
-				cancel : function(event){
-					scope.enabled = false;
-					scope.drag(iElement, event);
-				}
-			});
+				});
 
-			iElement[0].ondragstart = function(e){
-				return false;
-			};
+				$swipe.bind(angular.element(window), {
+					move : function(event){
+						if(scope.enabled){
+							scope.drag(iElement, event);
+						}
+					},
+					end : function(event){
+						scope.enabled = false;
+						scope.drag(iElement, event);
+					},
+					cancel : function(event){
+						scope.enabled = false;
+						scope.drag(iElement, event);
+					}
+				});
+
+				iElement[0].ondragstart = function(e){
+					return false;
+				};
+			});
 		}
 	};
 }])
