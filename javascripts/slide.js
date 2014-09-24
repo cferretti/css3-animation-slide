@@ -1,4 +1,4 @@
-var slide = angular.module('directive.slideIt', []);
+var slide = angular.module('directive.slideIt', ['ngTouch']);
 slide.controller('SlideItCtrl', ['$scope',function ($scope) {
 	$scope.pos = {
 		init : {
@@ -60,7 +60,7 @@ slide.controller('SlideItCtrl', ['$scope',function ($scope) {
 	};
 }]);
 
-slide.directive('slideIt', ['$timeout', '$window', function ($timeout, $window) {
+slide.directive('slideIt', ['$timeout', '$window', '$swipe',function ($timeout, $window,$swipe) {
 	return {
 		restrict: 'A',
 		scope : {
@@ -70,19 +70,29 @@ slide.directive('slideIt', ['$timeout', '$window', function ($timeout, $window) 
 		link : function (scope, iElement, iAttrs) {
 			iElement[0].draggable = 'true';
 			scope.init(iElement, scope.range);
-			iElement[0].onmousedown = function(e){
-				scope.enabled = true;
-				scope.drag(iElement, e);
-			};
-			angular.element(window).on('mousemove', function(e){
-               	if(scope.enabled){
-					scope.drag(iElement, e);
+			$swipe.bind(iElement, {
+				start : function(event){
+					scope.enabled = true;
+					scope.drag(iElement, event);
 				}
-             });
-			angular.element(window).on('mouseup', function(e){
-               	scope.enabled = false;
-				scope.drag(iElement, e);
-             });
+			});
+
+			$swipe.bind(angular.element(window), {
+				move : function(event){
+					if(scope.enabled){
+						scope.drag(iElement, event);
+					}
+				},
+				end : function(event){
+					scope.enabled = false;
+					scope.drag(iElement, event);
+				},
+				cancel : function(event){
+					scope.enabled = false;
+					scope.drag(iElement, event);
+				}
+			});
+
 			iElement[0].ondragstart = function(e){
 				return false;
 			};
