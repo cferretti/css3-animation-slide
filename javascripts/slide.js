@@ -15,7 +15,13 @@ slide.controller('SlideItCtrl', ['$scope',function ($scope) {
 	$scope.animationDuration = 0;
 	$scope.init = function(elements, dragRange){
 		$scope.animationDuration = $scope.getAnimationDuration(elements[0]);
-		$scope.dragRange = dragRange;
+		if(angular.isNumber(dragRange)){
+			$scope.dragRange = dragRange;
+		}else{
+			// Its compute time !
+			$scope.dragRange = elements.parent()[0].offsetWidth * (parseInt(dragRange.replace('%','')) / 100);
+			console.log($scope.dragRange);
+		}
 	};
 	$scope.getAnimationDuration = function(element){
 		var cssDuration = getComputedStyle(element, null).animationDuration ||  getComputedStyle(element, null).WebkitAnimationDuration;
